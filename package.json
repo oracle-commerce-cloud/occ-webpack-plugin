@@ -1,5 +1,5 @@
 {
-  "name": "occ-webpack-build-plugin",
+  "name": "occ-webpack-plugin",
   "description": "Oracle CX Commerce webpack plugin",
   "version": "1.0.0",
   "main": "index.js",
