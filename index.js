@@ -54,7 +54,7 @@ WebpackOnBuildPlugin.prototype.apply = function(compiler) {
           const targetDir = `${testFolder}/${file}/js`;
           const widgetName = file.toLowerCase();
           const widgetConfig = await leadWidgetConfig(widgetName).catch((e) => ({}));
-          let output = outputFiles.find((fileName) => fileName.includes(`${widgetConfig.javascript}.widget`));
+          let output = outputFiles.find((fileName) => fileName.includes(`${widgetConfig.javascript}`));
           fs.rmdirSync(targetDir, { recursive: true });
           if (!output) {
             console.log('  ', logSymbols.error, `/widget${FgGreen}/${file}/${Reset}js/${widgetConfig.javascript}.js`);
@@ -65,8 +65,9 @@ WebpackOnBuildPlugin.prototype.apply = function(compiler) {
           fs.createReadStream(output).pipe(fs.createWriteStream(`${targetDir}/${widgetConfig.javascript}.js`));
         }),
       );
-      console.log("\nThe " + FgCyan + platformFolderName + Reset + " folder is ready to be deployed.\n");
+      console.log("\nThe " + FgCyan + platformFolderName + Reset + " folder is ready to be deployed.");
       console.log("Find out more about deployment here:\n");
+      console.log(FgYellow, "https://bit.ly/2YSc5vH\n", Reset);
     });
   });
 };

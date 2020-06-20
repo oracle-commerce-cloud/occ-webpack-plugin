@@ -1,4 +1,4 @@
-# Oracle CX Commerce webpack plugin
+# [Oracle CX Commerce](https://cloud.oracle.com/en_US/commerce-cloud "Oracle Commerce Cloud") webpack plugin
 
 ## Usage
 
@@ -36,3 +36,8 @@ Transfer all files to the given Commerce Cloud administration interface from the
 cd platform/
 npx dcu -k $APP_KEY -n $APP_NODE -x .
 ```
+
+## Related
+* [create-occ-react-app](https://github.com/oracle-commerce-cloud/create-occ-react-app "occ-react-scripts") and [occ-react-scripts](https://www.npmjs.com/package/occ-react-scripts "occ-react-scripts")
+* [occ-react-components.ts](https://github.com/oracle-commerce-cloud/occ-react-components.ts "occ-react-components.ts")
+* [Design-Code-Utility](https://www.npmjs.com/package/@oraclecc/dcu "dcu")

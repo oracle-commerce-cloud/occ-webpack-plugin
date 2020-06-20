@@ -1,12 +1,32 @@
 {
   "name": "occ-webpack-plugin",
   "description": "Oracle CX Commerce webpack plugin",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "index.js",
   "repository": "https://github.com/oracle-commerce-cloud/occ-webpack-build-plugin.git",
   "author": "aboulmane <anassboulmane@gmail.com>",
   "license": "MIT",
   "dependencies": {
     "log-symbols": "^4.0.0"
-  }
+  },
+  "tags": [
+    "webpack",
+    "oracle-commerce-cloud",
+    "DesignCodeUtility",
+    "commerce-cloud",
+    "oracle",
+    "occ",
+    "cli",
+    "dcu"
+  ],
+  "keywords": [
+    "webpack",
+    "oracle-commerce-cloud",
+    "DesignCodeUtility",
+    "commerce-cloud",
+    "oracle",
+    "occ",
+    "cli",
+    "dcu"
+  ]
 }
