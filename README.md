@@ -20,6 +20,12 @@ new WebpackOnBuildPlugin({
 });
 ```
 
+When you’re ready to deploy to production, create a minified bundle with `npm run build`, then deploy using dcu CLI.
+
+<p align='center'>
+<img src='https://raw.githubusercontent.com/oracle-commerce-cloud/occ-webpack-plugin/master/screencast.svg' width='600' alt='npm run build'>
+</p>
+
 ## Deployment
 
 Install the module:
