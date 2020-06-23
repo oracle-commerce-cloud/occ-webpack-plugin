@@ -49,7 +49,7 @@ WebpackOnBuildPlugin.prototype.apply = function(compiler) {
 
     fs.readdir(testFolder, async (err, files) => {
       console.log("Preparing your " + FgCyan + platformFolderName + Reset + " folder so that it is ready to be deployed...\n");
-      await Promise.allSettled(
+      await Promise.all(
         files.map(async (file) => {
           const targetDir = `${testFolder}/${file}/js`;
           const widgetName = file.toLowerCase();
