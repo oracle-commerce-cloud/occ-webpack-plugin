@@ -26,7 +26,7 @@ FgWhite = "\x1b[37m";
  * @constructor
  * @param {onBuildCallback} callback - will be called right after build.
  */
-function WebpackOnBuildPlugin({ platform }) {
+function WebpackOnBuildPlugin ({ platform }) {
   this.platform = platform;
 }
 
@@ -40,35 +40,44 @@ function WebpackOnBuildPlugin({ platform }) {
  */
 WebpackOnBuildPlugin.prototype.apply = function(compiler) {
   const { platform } = this;
-  const platformFolderName = platform.split('/').pop();
+  const platformFolderName = platform.replace(`${process.env.PWD}/`, "");
   compiler.hooks.done.tap("WebpackOnBuildPlugin", ({ compilation, ...params }) => {
-    const testFolder = `${platform}/widget`;
-    const outputFiles = Array.from(compiler._assetEmittingWrittenFiles.keys());
+    try {
+      const testFolder = `${platform}/widget`;
+      const outputFiles = Array.from(compiler._assetEmittingWrittenFiles.keys());
 
-    const leadWidgetConfig = async (widgetName) => require(`${platform}/.ccc/widget/${widgetName}/widget.json`)
+      const leadWidgetConfig = async (widgetName) => require(`${platform}/.ccc/widget/${widgetName}/widget.json`);
 
-    fs.readdir(testFolder, async (err, files) => {
-      console.log("Preparing your " + FgCyan + platformFolderName + Reset + " folder so that it is ready to be deployed...\n");
-      await Promise.all(
-        files.map(async (file) => {
-          const targetDir = `${testFolder}/${file}/js`;
-          const widgetName = file.toLowerCase();
-          const widgetConfig = await leadWidgetConfig(widgetName).catch((e) => ({}));
-          let output = outputFiles.find((fileName) => fileName.includes(`${widgetConfig.javascript}`));
-          fs.rmdirSync(targetDir, { recursive: true });
-          if (!output) {
-            console.log('  ', logSymbols.error, `/widget${FgGreen}/${file}/${Reset}js/${widgetConfig.javascript}.js`);
-            return;
-          }
-          console.log('  ', logSymbols.success, `/widget${FgGreen}/${file}/${Reset}js/${widgetConfig.javascript}.js`);
-          fs.mkdirSync(targetDir, { recursive: true });
-          fs.createReadStream(output).pipe(fs.createWriteStream(`${targetDir}/${widgetConfig.javascript}.js`));
-        }),
-      );
-      console.log("\nThe " + FgCyan + platformFolderName + Reset + " folder is ready to be deployed.");
-      console.log("Find out more about deployment here:\n");
-      console.log(FgYellow, "https://bit.ly/2YSc5vH\n", Reset);
-    });
+      fs.readdir(testFolder, async (err, files) => {
+        console.log("Preparing your " + FgCyan + platformFolderName + Reset + " folder so that it is ready to be deployed...", "\n");
+        if (err) {
+          console.log("\n" + "The " + FgCyan + platformFolderName + Reset + " folder not found.", "\n");
+          return
+        }
+
+        await Promise.all(
+          (files || []).map(async (widgetName) => {
+            const targetDir = `${testFolder}/${widgetName}/js`;
+            const widgetConfig = await leadWidgetConfig(widgetName).catch((e) => ({}));
+            let output = outputFiles.find((fileName) => fileName.includes(`${widgetConfig.javascript}`));
+            if (!output) {
+              console.log("  ", logSymbols.error, `/widget${FgGreen}/${widgetName}/${Reset}js/${widgetConfig.javascript}.js`);
+              return;
+            }
+            console.log("  ", logSymbols.success, `/widget${FgGreen}/${widgetName}/${Reset}js/${widgetConfig.javascript}.js`);
+            fs.mkdirSync(targetDir, { recursive: true });
+            fs.createReadStream(output).pipe(fs.createWriteStream(`${targetDir}/${widgetConfig.javascript}.js`));
+          }),
+        );
+        console.log("\n" + "The", FgCyan + platformFolderName + Reset, "folder is ready to be deployed.");
+        console.log("Find out more about deployment here:", "\n");
+        console.log(FgYellow, "https://bit.ly/2YSc5vH", Reset, "\n");
+      });
+    } catch (e) {
+      console.error(e);
+      console.log("\n" + "please create an issue: ", "\n");
+      console.log(FgYellow, "https://bit.ly/2YSc5vH", Reset, "\n");
+    }
   });
 };
 
