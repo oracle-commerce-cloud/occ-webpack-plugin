@@ -1,7 +1,7 @@
 {
   "name": "occ-webpack-plugin",
   "description": "Oracle CX Commerce webpack plugin",
-  "version": "1.0.1",
+  "version": "1.0.6",
   "main": "index.js",
   "repository": "https://github.com/oracle-commerce-cloud/occ-webpack-build-plugin.git",
   "author": "aboulmane <anassboulmane@gmail.com>",
